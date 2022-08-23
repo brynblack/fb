@@ -11,13 +11,18 @@ impl<T> Fibonacci<T> {
     }
 }
 
-impl<T: Add<Output = T> + Copy> Iterator for Fibonacci<T> {
+impl<T> Iterator for Fibonacci<T>
+where
+    T: Add<Output = T> + Copy,
+{
     type Item = T;
     fn next(&mut self) -> Option<Self::Item> {
         let curr = self.curr;
         let next = self.curr + self.next;
+
         self.curr = self.next;
         self.next = next;
+
         Some(curr)
     }
 }
